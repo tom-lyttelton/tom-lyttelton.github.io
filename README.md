@@ -8,12 +8,14 @@ framework. Plain HTML and CSS served by GitHub Pages.
 | Path              | Purpose                                              |
 | ----------------- | ---------------------------------------------------- |
 | `index.html`      | Landing page: photo, position, research focus         |
-| `cv.html`         | CV as a web page                                      |
+| `research.html`   | Papers, grouped by status, with links                 |
 | `styles.css`      | All styling, light and dark theme                     |
 | `assets/CV.pdf`   | Generated — do not edit by hand (see below)           |
 | `assets/headshot.jpg` | Portrait, 900px wide                              |
 | `build-cv.sh`     | Regenerates `assets/CV.pdf` from the LaTeX source     |
 | `.nojekyll`       | Tells GitHub Pages to serve files as-is               |
+
+The nav's "CV" link points straight at `assets/CV.pdf` — there is no HTML CV page.
 
 ## Updating the CV
 
@@ -34,9 +36,9 @@ git push
 `build-cv.sh` compiles with [Tectonic](https://tectonic-typesetting.github.io/)
 at `~/.local/bin/tectonic`. It writes only `assets/CV.pdf`.
 
-**`cv.html` is maintained separately and does not update itself.** When the
-`.tex` changes substantively — a new publication, a job change — edit `cv.html`
-to match. The PDF is authoritative if the two ever disagree.
+**`research.html` is maintained separately and does not update itself.** When a
+paper is published or changes status, edit `research.html` to match. The PDF is
+authoritative if the two ever disagree.
 
 ## Local preview
 
