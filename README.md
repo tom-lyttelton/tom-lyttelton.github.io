@@ -1,4 +1,4 @@
-# thomaslyttelton.org
+# thomaslyttelton.com
 
 Static personal site — landing page plus CV. No build step, no dependencies, no
 framework. Plain HTML and CSS served by GitHub Pages.
@@ -57,12 +57,12 @@ then visit <http://localhost:8000>.
 
 ## Custom domain
 
-The site is served at <https://thomaslyttelton.org>. The `CNAME` file in this
+The site is served at <https://thomaslyttelton.com>. The `CNAME` file in this
 repo is what tells GitHub Pages that; do not delete or rename it. Requests to
 `tom-lyttelton.github.io` redirect to the custom domain automatically.
 
-The domain is registered through Wix (backend registrar Tucows). Wix is the
-authoritative DNS host, so the records live in the Wix dashboard, not here:
+The domain is registered with Cloudflare, which is also the authoritative DNS
+host, so the records live in the Cloudflare dashboard, not here:
 
 | Type  | Host  | Value                                                       |
 | ----- | ----- | ----------------------------------------------------------- |
@@ -70,8 +70,8 @@ authoritative DNS host, so the records live in the Wix dashboard, not here:
 | AAAA  | `@`   | `2606:50c0:8000::153` `2606:50c0:8001::153` `2606:50c0:8002::153` `2606:50c0:8003::153` |
 | CNAME | `www` | `tom-lyttelton.github.io`                                   |
 
-The domain must be disconnected from the Wix site first — while it is connected,
-Wix overwrites the apex records with its own and the site will not resolve here.
+Every record must be **DNS only** (grey cloud, not orange). Proxying through
+Cloudflare stops GitHub from issuing the TLS certificate.
 
 After DNS propagates, enable **Enforce HTTPS** in the repo's
 Settings → Pages. The certificate is issued by GitHub and can take up to
@@ -80,6 +80,10 @@ Settings → Pages. The certificate is issued by GitHub and can take up to
 To verify:
 
 ```sh
-dig +short thomaslyttelton.org
-curl -sI https://thomaslyttelton.org | head -1
+dig +short thomaslyttelton.com
+curl -sI https://thomaslyttelton.com | head -1
 ```
+
+The site previously used `thomaslyttelton.org`, registered through Wix. Wix does
+not allow delegating a domain it registered to external nameservers, which made
+it unusable with GitHub Pages. That domain was abandoned rather than transferred.
