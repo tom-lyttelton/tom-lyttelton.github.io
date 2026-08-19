@@ -13,6 +13,7 @@ framework. Plain HTML and CSS served by GitHub Pages.
 | `assets/CV.pdf`   | Generated — do not edit by hand (see below)           |
 | `assets/headshot.jpg` | Portrait, 900px wide                              |
 | `build-cv.sh`     | Regenerates `assets/CV.pdf` from the LaTeX source     |
+| `CNAME`           | Custom domain GitHub Pages serves the site at         |
 | `.nojekyll`       | Tells GitHub Pages to serve files as-is               |
 
 The nav's "CV" link points straight at `assets/CV.pdf` — there is no HTML CV page.
@@ -56,8 +57,29 @@ then visit <http://localhost:8000>.
 
 ## Custom domain
 
-`thomaslyttelton.org` is registered through Wix (backend registrar Tucows) and
-is transfer-locked until **13 August 2026** following a registrar transfer on
-14 June 2026. After that date it can be moved to another registrar and pointed
-here. To attach it, add a `CNAME` file containing `thomaslyttelton.org` and set
-the DNS records GitHub Pages specifies.
+The site is served at <https://thomaslyttelton.org>. The `CNAME` file in this
+repo is what tells GitHub Pages that; do not delete or rename it. Requests to
+`tom-lyttelton.github.io` redirect to the custom domain automatically.
+
+The domain is registered through Wix (backend registrar Tucows). Wix is the
+authoritative DNS host, so the records live in the Wix dashboard, not here:
+
+| Type  | Host  | Value                                                       |
+| ----- | ----- | ----------------------------------------------------------- |
+| A     | `@`   | `185.199.108.153` `185.199.109.153` `185.199.110.153` `185.199.111.153` |
+| AAAA  | `@`   | `2606:50c0:8000::153` `2606:50c0:8001::153` `2606:50c0:8002::153` `2606:50c0:8003::153` |
+| CNAME | `www` | `tom-lyttelton.github.io`                                   |
+
+The domain must be disconnected from the Wix site first — while it is connected,
+Wix overwrites the apex records with its own and the site will not resolve here.
+
+After DNS propagates, enable **Enforce HTTPS** in the repo's
+Settings → Pages. The certificate is issued by GitHub and can take up to
+24 hours to appear.
+
+To verify:
+
+```sh
+dig +short thomaslyttelton.org
+curl -sI https://thomaslyttelton.org | head -1
+```
